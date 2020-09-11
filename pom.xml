@@ -57,7 +57,7 @@
             <version>1.18.8</version>
         </dependency>
 
-        <!-- fastjson-->
+        <!-- fast json-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
