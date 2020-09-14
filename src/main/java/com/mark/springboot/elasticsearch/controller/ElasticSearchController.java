@@ -27,7 +27,7 @@ import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.index.query.WildcardQueryBuilder;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
@@ -345,10 +345,12 @@ public class ElasticSearchController {
         //.maxExpansions(10); //设置最大扩展选项以控制查询的模糊过程
         //sourceBuilder.query(matchQueryBuilder);
 
-        // 查询条件 添加，user = kimchy
-        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("user", twitter.getUser());
+        // 精确匹配
+        //TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("user", twitter.getUser());
+        // 模糊匹配 %s的意思是,字符串类型替换,用后面的twitter.getUser()替换%s
+        WildcardQueryBuilder termQueryBuilder = QueryBuilders.wildcardQuery("user.keyword", String.format("*%s*", twitter.getUser()));
         BoolQueryBuilder boolBuilder = QueryBuilders.boolQuery();
-        boolBuilder.must(termQueryBuilder);
+        boolBuilder.should(termQueryBuilder);
         sourceBuilder.query(boolBuilder);
 
         // 查询开始-结束 。可以用来分页使用
