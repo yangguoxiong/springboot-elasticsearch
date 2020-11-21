@@ -338,6 +338,7 @@ public class ElasticSearchController {
         }
         SearchRequest searchRequest = new SearchRequest(index);
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
         // 默认分词查询
         //QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("user", "你好企业")
         //.fuzziness(Fuzziness.AUTO) //模糊查询
